@@ -14,13 +14,14 @@ const Login = props => {
 
   const handleChange = event => {
     setLogin({ ...login, [event.target.name]: event.target.value });
+    console.log(login);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     setLogin({ ...login, isFetching: true });
     axiosWithAuth()
-      .post("/api/login", login)
+      .post("http://localhost:5000/api/login", login)
       .then(response => {
         console.log("axios post response: ", response)
         localStorage.setItem("token", response.data.message);
@@ -49,13 +50,13 @@ const Login = props => {
           type="text"
           name="password"
           placeholder="password"
-          value={login.username}
+          value={login.password}
           onChange={handleChange}
         />
         <br/>
         <br/>
         <button>Log In</button>
-        {/* add logging in status here */}
+        {login.isFetching && "Please wait, loggin in..."}
       </form>
     </>
   );
