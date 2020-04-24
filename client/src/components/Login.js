@@ -24,7 +24,7 @@ const Login = props => {
       .post("http://localhost:5000/api/login", login)
       .then(response => {
         console.log("axios post response: ", response)
-        localStorage.setItem("token", response.data.message);
+        localStorage.setItem("token", response.data.payload);
         props.history.push("/bubble-page");
       })
       .catch(error => {
