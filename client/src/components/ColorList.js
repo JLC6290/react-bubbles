@@ -24,11 +24,8 @@ const ColorList = ({ colors, updateColors }) => {
       .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(response => {
         console.log(response.data);
-        const addColors = [
-          ...colors,
-          colorToEdit
-        ]
-        updateColors(addColors);
+        const updatedColors = [...colors.filter(color => color.id !== response.data.id), response.data]
+        updateColors(updatedColors);
       })
       .catch(error => {
         console.log("error caught, colorToEdit: ", colorToEdit);
@@ -37,7 +34,14 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
+    axiosWithAuth()
+      .delete(`http://localhost:5000/api/colors/${colorToEdit.id}`, color)
+      .then(response => {
+        console.log("delete request response: ", response);
+      })
+      .catch(error => {
+        console.log("delete request error: ", error);
+      });
   };
 
   return (
