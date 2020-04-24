@@ -38,6 +38,8 @@ const ColorList = ({ colors, updateColors }) => {
       .delete(`http://localhost:5000/api/colors/${colorToEdit.id}`, color)
       .then(response => {
         console.log("delete request response: ", response);
+        const updatedColors = [...colors.filter(remaining => remaining.id !== color.id)]
+        updateColors(updatedColors);
       })
       .catch(error => {
         console.log("delete request error: ", error);
